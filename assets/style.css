@@ -1,0 +1,19 @@
+.title {
+    border-style:solid;
+    border-color: rgb(40, 40, 177);
+  }
+
+  .search {
+    border-style: solid;
+    border-color:rgb(91, 69, 97);
+  }
+  
+  .city-data {
+    border-style: solid;
+    border-color:rgb(86, 119, 129);
+  }
+
+  .forecast {
+    border-style: solid;
+    border-color:rgb(40, 40, 177);
+  }

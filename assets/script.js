@@ -4,15 +4,15 @@ $(function () {
     var searchBtn = $('#search-btn')
     var apiKey = '4002166d0bd05a797585e40fd9241a1b'
     
-
     // get city name from user
     searchBtn.on('click', function () {
         var cityName = $('#search-input').val().trim();
         searchWeather(cityName);
         getForecast(cityName);
+        saveCity(cityName);
     })
 
-    // search weather & console.log data
+    // Search weather & console.log data
     function searchWeather(city) {
         fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`)
             .then(function (response) {
@@ -29,13 +29,11 @@ $(function () {
                 $("<h2> Temp: "  + temp + "°F" + "</h2>").appendTo("#temp");
                 $("<h2> Wind Speed: " + wind + "MPH" +"</h2>").appendTo("#wind-speed");
                 $("<h2> Humidity: " + humidity + "%" +"</h2>").appendTo("#humidity");
-                
             });
-
     }
 
+    // Five day forecast
     function getForecast(city) {
-        
         fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`)
         .then(function (response) {
             return response.json();
@@ -48,20 +46,11 @@ $(function () {
           });
       }
 
+    // Save searches
+    function saveCity (city) {
+        localStorage.setItem(city, $('#search-input').val().trim())
+    }
+
 
 });
-    // pass data to the function that will render it into the HTML publish to DOM 
-    // help from https://w3collective.com/fetch-display-api-data-javascript/ 
-    // "main": {
-    //     "temp": 296.76,
-    //      "humidity": 69,
-    // },
-
-    // "wind": {
-    //     "speed": 0.62,
-    // },
-    // "city": {
-    //     "name": 'Chicago',
-    // }
-
 

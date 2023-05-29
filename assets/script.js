@@ -12,11 +12,9 @@ $(function () {
         getForecast(cityName);
         pushSearches();
         $('#search-input').val("");
-
         if (!cityName) {
             alert("Please enter a city");
           }
-      
     })
 
     clearBtn.on('click', function () {
@@ -32,6 +30,10 @@ $(function () {
             })
             .then(function (data) {
                 console.log(data);
+                $("#city").empty();
+                $("#temp").empty();
+                $("#wind-speed").empty();
+                $("#humidity").empty();
                 var city = data.city.name;
                 var date = data.list[0].dt_txt;
                 var temp = data.list[0].main.temp;
@@ -51,6 +53,7 @@ $(function () {
                 return response.json();
             })
             .then(function (data) {
+                $("#five-day-forecast").empty();
                 var dataList = data.list;
                 for (var i = 0; i < dataList.length; i += 8) {
                     $("<li>").text(`${dataList[i].dt_txt}: Temp - ${data.list[i].main.temp}°F  Wind Speed - ${data.list[i].wind.speed}MPH  Humidity - ${data.list[i].main.humidity}%`).appendTo("#five-day-forecast");
@@ -68,7 +71,7 @@ $(function () {
         //   get city search list from local storage, convert JSON string to object, if local storage is empty, will set variable to empty array
         var city = JSON.parse(localStorage.getItem("city")) || [];
 
-        // convert object to array in order to push variable to array (you can only push arrays to arrays)
+        // help from Bard, convert object to array in order to push variable to array (you can only push arrays to arrays)
         cityArray = Array.from(city);
         // push new input to local storage
         cityArray.push(cityName);
@@ -77,14 +80,13 @@ $(function () {
     }
 
     function renderCityBtn() {
+        $("#search-list").empty();
         for (var i = 0; i < cityArray.length; i++) {
             var cityBtn = $("<button>");
             cityBtn.text(cityArray[i]);
             cityBtn.appendTo("#search-list");
         }
     }
-
-
 
 });
 

@@ -82,11 +82,33 @@ $(function () {
     function renderCityBtn() {
         $("#search-list").empty();
         for (var i = 0; i < cityArray.length; i++) {
-            var cityBtn = $("<button>");
-            cityBtn.text(cityArray[i]);
-            cityBtn.appendTo("#search-list");
+            var cityBtn = $("<button>")
+            .text(cityArray[i])
+            .appendTo("#search-list");
         }
     }
+ 
+
+    $("#search-list").on('click', function(event) {
+        var cityBtn = $("<button>");
+        var innerHTML = cityBtn.html()
+        console.log(innerHTML);
+    })
 
 });
-
+// console.log($("#search-list").innerHTML);
+// var cityBtn = $("#search-list");
+        // var btnText = cityBtn.text();
+        // searchWeather(btnText);
+        // getForecast(btnText);
+        
+            // cityBtn.on('click', function() {
+            //     $("#city").empty();
+            //     $("#temp").empty();
+            //     $("#wind-speed").empty();
+            //     $("#humidity").empty();
+            //     $("#five-day-forecast").empty();
+                
+            //     // searchWeather(cityArray[i]);
+            // }
+            // )

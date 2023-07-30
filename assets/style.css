@@ -17,6 +17,17 @@
     border-style: solid;
     border-color:rgb(40, 40, 177);
   }
+  .forecastIcon {
+    border-style: solid;
+    border-color:rgb(40, 40, 177);
+  }
+
+  /* .icon {
+    border-style: solid;
+    border-color:rgb(177, 40, 131);
+    width: 60px;
+    height: 60px;
+  } */
 
   button {
     width: 60px;

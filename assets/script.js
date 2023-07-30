@@ -8,14 +8,18 @@ $(function () {
     // get city name from user
     searchBtn.on('click', function () {
         var cityName = $('#search-input').val().trim();
-        searchWeather(cityName);
-        getForecast(cityName);
+        startSearch(cityName);
+    })
+
+    function startSearch(incCity) {
+        searchWeather(incCity);
+        getForecast(incCity);
         pushSearches();
         $('#search-input').val("");
-        if (!cityName) {
+        if (!incCity) {
             alert("Please enter a city");
           }
-    })
+    }
 
     clearBtn.on('click', function () {
         localStorage.clear();
@@ -34,15 +38,18 @@ $(function () {
                 $("#temp").empty();
                 $("#wind-speed").empty();
                 $("#humidity").empty();
+                $("#icon").empty();
                 var city = data.city.name;
                 var date = data.list[0].dt_txt;
                 var temp = data.list[0].main.temp;
                 var wind = data.list[0].wind.speed;
                 var humidity = data.list[0].main.humidity;
+                var icon = data.list[0].weather[0].icon;
                 $("<h1>" + city + " " + date + "</h1>").appendTo("#city");
                 $("<h2> Temp: " + temp + "°F" + "</h2>").appendTo("#temp");
                 $("<h2> Wind Speed: " + wind + "MPH" + "</h2>").appendTo("#wind-speed");
                 $("<h2> Humidity: " + humidity + "%" + "</h2>").appendTo("#humidity");
+                $("<img src='https://openweathermap.org/img/wn/" + icon + ".png" + "' />" ).appendTo("#icon");
             });
     }
     
@@ -54,9 +61,12 @@ $(function () {
             })
             .then(function (data) {
                 $("#five-day-forecast").empty();
+                $("#forecastIcon").empty();
+                var icon = data.list[0].weather[0].icon;
                 var dataList = data.list;
                 for (var i = 0; i < dataList.length; i += 8) {
                     $("<li>").text(`${dataList[i].dt_txt}: Temp - ${data.list[i].main.temp}°F  Wind Speed - ${data.list[i].wind.speed}MPH  Humidity - ${data.list[i].main.humidity}%`).appendTo("#five-day-forecast");
+                    $(`${"<img src='https://openweathermap.org/img/wn/" + icon + ".png" + "' />" }`).appendTo('#forecastIcon');
                 }
             });
     }
@@ -83,17 +93,22 @@ $(function () {
         $("#search-list").empty();
         for (var i = 0; i < cityArray.length; i++) {
             var cityBtn = $("<button>")
-            .text(cityArray[i])
-            .appendTo("#search-list");
+            .text(cityArray[i]);
+            cityBtn.click( searchHistory );
+            cityBtn.appendTo("#search-list");
         }
     }
  
+    function searchHistory(event) {
+        //console.log(event.target.textContent)
+        startSearch(event.target.textContent)
+    }
 
-    $("#search-list").on('click', function(event) {
-        var cityBtn = $("<button>");
-        var innerHTML = cityBtn.html()
-        console.log(innerHTML);
-    })
+    // $("#search-list").on('click', function(event) {
+    //     var cityBtn = $("<button>");
+    //     var innerHTML = cityBtn.html()
+    //     console.log(innerHTML);
+    // })
 
 });
 // console.log($("#search-list").innerHTML);
